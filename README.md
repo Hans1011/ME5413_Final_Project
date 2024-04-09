@@ -47,7 +47,10 @@ This repo is a ros workspace, containing three rospkgs:
 * `interactive_tools` are customized tools to interact with gazebo and your robot
 * `jackal_description` contains the modified jackal robot model descriptions
 * `me5413_world` the main pkg containing the gazebo world, and the launch files
-
+* sudo apt-get install ros-noetic-teb-local-planner
+* sudo apt-get install ros-noetic-rviz-imu-plugin
+* sudo apt-get install ros-noetic-find-object-2d
+  
 **Note:** If you are working on this project, it is encouraged to fork this repository and work on your own fork!
 
 After forking this repo to your own github:
@@ -144,37 +147,15 @@ Then, in the second terminal:
 ```bash
 # Load a map and launch AMCL localizer
 roslaunch me5413_world navigation.launch
+# Choose the five observation points base on your target box location
+Click the button on Rviz Panel
+# Use our vison algorithm to navigate towards the target box
+roslaunch nav_box nav_box_type2.launch 
 ```
 
 ![rviz_navigation_image](src/me5413_world/media/rviz_navigation.png)
 
-## Student Tasks
 
-### 1. Map the environment
-
-* You may use any SLAM algorithm you like, any type:
-  * 2D LiDAR
-  * 3D LiDAR
-  * Vision
-  * Multi-sensor
-* Verify your SLAM accuracy by comparing your odometry with the published `/gazebo/ground_truth/state` topic (`nav_msgs::Odometry`), which contains the gournd truth odometry of the robot.
-* You may want to use tools like [EVO](https://github.com/MichaelGrupp/evo) to quantitatively evaluate the performance of your SLAM algorithm.
-
-### 2. Using your own map, navigate your robot
-
-* From the starting point, move to the given pose within each area in sequence
-  * Assembly Line 1, 2
-  * Random Box 1, 2, 3, 4
-  * Delivery Vehicle 1, 2, 3
-* We have provided you a GUI in RVIZ that allows you to click and publish these given goal poses to the `/move_base_simple/goal` topic:
-  
-  ![rviz_panel_image](src/me5413_world/media/rviz_panel.png)
-
-* We also provides you four topics (and visualized in RVIZ) that computes the real-time pose error between your robot and the selelcted goal pose:
-  * `/me5413_world/absolute/heading_error` (in degrees, wrt `world` frame, `std_msgs::Float32`)
-  * `/me5413_world/absolute/position_error` (in meters, wrt `world` frame, `std_msgs::Float32`)
-  * `/me5413_world/relative/heading_error` (in degrees, wrt `map` frame, `std_msgs::Float32`)
-  * `/me5413_world/relative/position_error` (in meters wrt `map` frame, `std_msgs::Float32`)
 
 ## Contribution
 
